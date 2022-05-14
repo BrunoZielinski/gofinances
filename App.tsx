@@ -9,7 +9,7 @@ import {
   Poppins_400Regular
 } from '@expo-google-fonts/poppins'
 
-import Dashboard from './src/pages/Dashboard'
+import Register from './src/pages/Register'
 import theme from './src/global/styles/theme'
 import { useCallback, useEffect } from 'react'
 
@@ -42,7 +42,7 @@ export default function App() {
         barStyle="light-content"
         backgroundColor={theme.colors.primary}
       />
-      <Dashboard />
+      <Register />
     </ThemeProvider>
   )
 }

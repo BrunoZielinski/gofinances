@@ -2,8 +2,8 @@ import { FlatList, FlatListProps } from 'react-native'
 
 import styled from 'styled-components/native'
 import { Feather } from '@expo/vector-icons'
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize'
 import { getBottomSpace } from 'react-native-iphone-x-helper'
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize'
 
 import { DataListProps } from '.'
 
