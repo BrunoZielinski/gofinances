@@ -24,9 +24,16 @@ export const Title = styled.Text`
 export const Form = styled.View`
   flex: 1;
   padding: ${RFValue(24)}px;
+  justify-content: space-between;
+`
+
+export const Fields = styled.View`
+  margin-bottom: ${RFValue(16)}px;
 `
 
 export const TransactionTypes = styled.View`
   flex-direction: row;
+  margin-top: ${RFValue(8)}px;
   justify-content: space-between;
+  margin-bottom: ${RFValue(16)}px;
 `

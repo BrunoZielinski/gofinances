@@ -8,7 +8,12 @@ interface TypeProps {
   type: 'up' | 'down'
 }
 
-export const Button = styled(TouchableOpacity)`
+interface ButtonProps {
+  isActive: boolean
+  type: 'up' | 'down'
+}
+
+export const Button = styled(TouchableOpacity)<ButtonProps>`
   width: 48%;
   border-radius: 5px;
   flex-direction: row;
@@ -16,6 +21,22 @@ export const Button = styled(TouchableOpacity)`
   justify-content: center;
   padding: ${RFValue(18)}px 0;
   border: 1.5px solid ${({ theme }) => theme.colors.text};
+
+  ${({ type, isActive }) =>
+    type === 'up' &&
+    isActive &&
+    css`
+      border-color: transparent;
+      background-color: ${({ theme }) => theme.colors.successLight};
+    `}
+
+  ${({ type, isActive }) =>
+    type === 'down' &&
+    isActive &&
+    css`
+      border-color: transparent;
+      background-color: ${({ theme }) => theme.colors.attentionLight};
+    `}
 `
 
 export const Icon = styled(Feather)<TypeProps>`

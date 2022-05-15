@@ -1,6 +1,7 @@
 import { StatusBar } from 'react-native'
 import { ThemeProvider } from 'styled-components'
 import * as SplashScreen from 'expo-splash-screen'
+import { NavigationContainer } from '@react-navigation/native'
 
 import {
   useFonts,
@@ -9,9 +10,9 @@ import {
   Poppins_400Regular
 } from '@expo-google-fonts/poppins'
 
-import Register from './src/pages/Register'
 import theme from './src/global/styles/theme'
 import { useCallback, useEffect } from 'react'
+import { AppRoutes } from './src/routes/app.routes'
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -38,11 +39,13 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <StatusBar
-        barStyle="light-content"
-        backgroundColor={theme.colors.primary}
-      />
-      <Register />
+      <NavigationContainer>
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor={theme.colors.primary}
+        />
+        <AppRoutes />
+      </NavigationContainer>
     </ThemeProvider>
   )
 }
