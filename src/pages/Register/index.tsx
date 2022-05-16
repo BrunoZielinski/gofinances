@@ -1,7 +1,9 @@
 import * as yup from 'yup'
 import { useState } from 'react'
+import uuid from 'react-native-uuid'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Modal, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native'
 
 import * as C from './styles'
@@ -42,30 +44,46 @@ const Register = () => {
   const [transactionType, setTransactionType] = useState('')
   const [modalVisibility, setModalVisibility] = useState(false)
 
+  const dataKey = '@gofinances:transactions'
+
   const handleTransactionTypeSelect = (type: 'up' | 'down') => {
     setTransactionType(type)
   }
 
-  const handleRegister = (formData: Partial<FormData>) => {
+  const handleRegister = async (formData: Partial<FormData>) => {
     if (!transactionType) return Alert.alert('Selecione um tipo de transação')
 
     if (category.key === 'category')
       return Alert.alert('Selecione uma categoria')
 
-    const data = {
-      name: formData.name,
-      amount: formData.amount,
+    const newTransaction = {
       transactionType,
-      category: category.key
+      date: new Date(),
+      name: formData.name,
+      category: category.key,
+      amount: formData.amount,
+      id: uuid.v4().toString()
     }
 
-    console.log(data)
-    reset()
-    setTransactionType('')
-    setCategory({
-      key: 'category',
-      name: 'Categoria'
-    })
+    try {
+      const data = await AsyncStorage.getItem(dataKey)
+      const currentData = data ? JSON.parse(data) : []
+
+      const dataForm = [...currentData, newTransaction]
+
+      await AsyncStorage.setItem(dataKey, JSON.stringify(dataForm))
+
+      reset()
+      setTransactionType('')
+      setCategory({
+        key: 'category',
+        name: 'Categoria'
+      })
+      Alert.alert('Salvo com sucesso')
+    } catch (err) {
+      console.error(err)
+      Alert.alert('Não foi possivel salvar')
+    }
   }
 
   return (
@@ -115,7 +133,7 @@ const Register = () => {
             />
           </C.Fields>
 
-          <Button title="Enviar" onPress={handleSubmit(handleRegister)} />
+          <Button title="Cadastrar" onPress={handleSubmit(handleRegister)} />
         </C.Form>
 
         <Modal visible={modalVisibility} animationType="slide">

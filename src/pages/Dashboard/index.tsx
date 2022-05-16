@@ -1,7 +1,9 @@
+import { useEffect } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
 import * as C from './styles'
 import { HighLighCard } from '../../components/HighLighCard'
 import { TransactionCard } from '../../components/TransactionCard'
-
 import { TransactionCardProps } from '../../components/TransactionCard'
 
 export interface DataListProps extends TransactionCardProps {
@@ -34,6 +36,17 @@ const Dashboard = () => {
     }
   ]
 
+  const dataKey = '@gofinances:transactions'
+
+  useEffect(() => {
+    const loadData = async () => {
+      const data = await AsyncStorage.getItem(dataKey)
+      console.log(JSON.parse(data!))
+    }
+
+    loadData()
+  }, [])
+
   return (
     <C.Container>
       <C.Header>
@@ -47,7 +60,9 @@ const Dashboard = () => {
             </C.User>
           </C.UserInfo>
 
-          <C.Icon name="power" />
+          <C.LogoutButton onPress={() => {}}>
+            <C.Icon name="power" />
+          </C.LogoutButton>
         </C.UserWrapper>
       </C.Header>
 

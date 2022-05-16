@@ -54,6 +54,10 @@ export const UserName = styled.Text`
   font-family: ${({ theme }) => theme.fonts.bold};
 `
 
+export const LogoutButton = styled.TouchableOpacity.attrs({
+  activeOpacity: 0.7
+})``
+
 export const Icon = styled(Feather)`
   font-size: ${RFValue(24)}px;
   color: ${({ theme }) => theme.colors.secondary};
